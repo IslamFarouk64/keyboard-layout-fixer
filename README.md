@@ -6,13 +6,12 @@
 
 ## 🇬🇧 English
 
-A simple and fast web tool that fixes text accidentally typed in the wrong keyboard layout (e.g., converting `]dh hgHhg` into `مرحباً`). Converts instantly between English and Arabic based on standard physical QWERTY/Arabic keyboard layouts.
+A fast and responsive web tool that automatically corrects text mistakenly typed in the wrong keyboard language layout (e.g., converting `]dh hgHhg` into `مرحباً`). Designed to handle conversions between Arabic and English/Latin-based layouts seamlessly using physical key mapping.
 
 ### 🌐 Online Usage
 You can use the application directly in your browser without downloading anything:
 
-👉 **[Launch Application Online](https://IslamFarouk64.github.io/keyboard-language-corrector/)**  
-*(Note: Replace `YOUR-USERNAME` with your GitHub username)*
+👉 **[Launch Application Online](https://IslamFarouk64.github.io/keyboard-layout-fixer/)**  
 
 ---
 
@@ -23,16 +22,17 @@ To run the app locally on your device without an internet connection:
 2. Click **`Download ZIP`**.
 3. Extract the downloaded `.zip` file.
 4. Double-click the **`index.html`** file.
-5. The application will open immediately in your web browser with all features working completely offline!
+5. The application will open immediately in your web browser and works 100% offline!
 
 ---
 
 ### ✨ Features
-- ⚡ **Instant & Automatic Detection:** Automatically recognizes and converts text as you type or paste.
-- 🔄 **Forced Mode:** Force conversion explicitly to (Arabic ➔ English) or (English ➔ Arabic).
-- 📴 **100% Offline:** Fully self-contained in a single lightweight file.
-- 🎨 **Responsive UI:** Adapts to Dark and Light system themes automatically.
-- 📋 **One-Click Copy:** Easily copy the corrected text with a single click.
+- ⚡ **Instant & Automatic Detection:** Automatically recognizes text orientation and converts as you type or paste.
+- 🌍 **Multi-Language & Layout Support:** Handles Arabic and Latin-based keyboard layouts (English, French, etc. typed on QWERTY/Arabic physical layouts).
+- 🔄 **Forced Conversion Modes:** Option to force conversion explicitly to Arabic or English/Latin.
+- 📴 **100% Offline:** Fully self-contained single file with zero external dependencies.
+- 🎨 **Responsive UI:** Auto-detects and switches between Dark and Light themes.
+- 📋 **One-Click Copy:** Easily copy corrected text with visual feedback.
 
 ---
 
@@ -45,7 +45,7 @@ To run the app locally on your device without an internet connection:
 
 ## 🇸🇦 العربية
 
-أداة بسيطة وسريعة تُحل مشكلة الكتابة بلغة كيبورد خاطئة (مثل كتابة `]dh hgHhg` بدلاً من `مرحباً`). تقوم الأداة بالتحويل الفوري بين اللغة العربية والإنجليزي بنفس تخطيط لوحة المفاتيح.
+أداة بسيطة وسريعة تُحل مشكلة الكتابة بلغة كيبورد خاطئة (مثل كتابة `]dh hgHhg` بدلاً من `مرحباً`). تقوم الأداة بالتحويل الفوري للنصوص بين اللغات اللاتينية (الإنجليزية وغيرها) واللغة العربية بناءً على تخطيط مفاتيح الكيبورد الفيزيائي.
 
 ---
 
@@ -53,9 +53,7 @@ To run the app locally on your device without an internet connection:
 
 يمكنك استخدام التطبيق مباشرة من المتصفح بدون تحميل من خلال الرابط التالي:
 
-👉 **[اضغط هنا لتشغيل التطبيق أونلاين](https://IslamFarouk64.github.io/keyboard-language-corrector/)**
-
-*(ملاحظة: استبدل `YOUR-USERNAME` باسم حسابك على GitHub)*
+👉 **[اضغط هنا لتشغيل التطبيق أونلاين](https://IslamFarouk64.github.io/keyboard-layout-fixer/)**
 
 ---
 
@@ -74,7 +72,8 @@ To run the app locally on your device without an internet connection:
 ## ✨ المميزات
 
 - ⚡ **تحويل فوري وتلقائي:** يتعرف التطبيق على اللغة المحولة تلقائياً بمجرد اللصق أو الكتابة.
-- 🔄 **تحويل إجباري:** خيارات للتحويل الإجباري إلى (عربي ➔ إنجليزي) أو (إنجليزي ➔ عربي).
+- 🌍 **دعم لغات وتخطيطات متعددة:** يدعم التحويل بين العربية واللغات القائمة على الحروف اللاتينية (إنجليزية وغيرها) حسب موضع المفاتيح.
+- 🔄 **تحويل إجباري:** خيارات للتحويل الإجباري إلى (عربي) أو (إنجليزي / لاتيني).
 - 📴 **يعمل أوفلاين 100%:** ملف واحد شامل بدون الاعتماد على سيرفرات خارجية.
 - 🎨 **واجهة خفيفة ومريحة:** يدعم الوضع المظلم (Dark Mode) والوضع الفاتح (Light Mode) حسب إعدادات جهازك.
 - 📋 **نسخ سريع:** زر مخصص لنسخ النص المصحح بضغطة واحدة.
