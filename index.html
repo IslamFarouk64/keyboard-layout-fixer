@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مصحّح لغة الكيبورد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1b1a17;
+    --panel: #242220;
+    --panel-raised: #2c2a26;
+    --key-edge: #171613;
+    --accent: #c9922f;
+    --accent-dim: #8a6a2c;
+    --text: #ece6d8;
+    --muted: #93897a;
+    --good: #7fae6c;
+    --border: #3a3630;
+    --radius: 10px;
+  }
+  :root:not([data-theme="light"]) {}
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f2ede1;
+      --panel: #ffffff;
+      --panel-raised: #fbf8f1;
+      --key-edge: #ddd4bf;
+      --accent: #a3701f;
+      --accent-dim: #c9922f;
+      --text: #2a251c;
+      --muted: #7c7364;
+      --good: #4c7a3d;
+      --border: #e2d9c4;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1b1a17;
+    --panel: #242220;
+    --panel-raised: #2c2a26;
+    --key-edge: #171613;
+    --accent: #c9922f;
+    --accent-dim: #8a6a2c;
+    --text: #ece6d8;
+    --muted: #93897a;
+    --good: #7fae6c;
+    --border: #3a3630;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans Arabic', 'IBM Plex Mono', sans-serif;
+    padding: calc(28px + env(safe-area-inset-top, 0px)) 20px calc(28px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    justify-content: center;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 620px;
+  }
+
+  header {
+    margin-bottom: 22px;
+  }
+  .keycap {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    background: var(--panel-raised);
+    border-radius: 6px;
+    padding: 3px 9px;
+    letter-spacing: 0.03em;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    margin: 12px 0 6px;
+    line-height: 1.35;
+  }
+  p.lead {
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.7;
+    margin: 0;
+    max-width: 52ch;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .panel-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .panel-label span.name {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .badge.active {
+    color: var(--good);
+    border-color: var(--good);
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 110px;
+    resize: vertical;
+    background: var(--panel-raised);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 17px;
+    font-family: inherit;
+    line-height: 1.8;
+    outline: none;
+  }
+  textarea:focus {
+    border-color: var(--accent-dim);
+  }
+  textarea::placeholder { color: var(--muted); }
+
+  #output {
+    color: var(--good);
+    cursor: text;
+  }
+
+  .row-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 4px 0 18px;
+  }
+  button {
+    font-family: inherit;
+    font-size: 13.5px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--panel-raised);
+    color: var(--text);
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease;
+  }
+  button:hover { border-color: var(--accent-dim); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #1b1a17;
+    font-weight: 600;
+  }
+  button.primary:hover { border-color: var(--accent); }
+  button.ghost { color: var(--muted); }
+  button.icon-btn {
+    padding: 8px 12px;
+    font-size: 12.5px;
+  }
+
+  .copied-msg {
+    font-size: 12.5px;
+    color: var(--good);
+    opacity: 0;
+    transition: opacity .2s ease;
+  }
+  .copied-msg.show { opacity: 1; }
+
+  footer.note {
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.8;
+    margin-top: 8px;
+  }
+  select{font-family:inherit;font-size:14px;background:var(--panel-raised);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 10px;width:100%}
+  .pick{display:flex;gap:8px;align-items:flex-end;margin-bottom:14px}
+  .pick label{flex:1;font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+  #swap{padding:8px 12px;font-size:16px}
+  #detected{min-height:22px;margin:0 0 12px}
+  .uilang{margin-top:16px;max-width:180px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="keycap">A ⇄ ع ⇄ Я</span>
+    <h1 id="t-title"></h1>
+    <p class="lead" id="t-lead"></p>
+  </header>
+  <div class="pick">
+    <label><span id="t-from"></span><select id="from"></select></label>
+    <button id="swap" type="button">⇄</button>
+    <label><span id="t-to"></span><select id="to"></select></label>
+  </div>
+  <div id="detected"><span class="badge active" id="det-badge"></span></div>
+  <div class="panel">
+    <div class="panel-label"><span class="name" id="t-in"></span><button id="clear-btn" class="ghost icon-btn"></button></div>
+    <textarea id="input" dir="auto" autofocus></textarea>
+  </div>
+  <div class="panel">
+    <div class="row-between panel-label">
+      <span class="name" id="t-out"></span>
+      <div class="row-between" style="gap:8px"><span class="copied-msg" id="copied-msg"></span><button id="copy-btn" class="icon-btn"></button></div>
+    </div>
+    <textarea id="output" dir="auto" readonly></textarea>
+  </div>
+  <footer class="note" id="t-note"></footer>
+  <select id="uilang" class="uilang" aria-label="Interface language"></select>
+</div>
+<script>
+/*ENGINE*/
+const RAW = {
+ en:{n:"English",u:"`1234567890-="+"qwertyuiop[]\\"+"asdfghjkl;'"+"zxcvbnm,./",
+     s:"~!@#$%^&*()_+"+"QWERTYUIOP{}|"+"ASDFGHJKL:\""+"ZXCVBNM<>?"},
+ ar:{n:"العربية",lig:{"ﻻ":"لا","ﻹ":"لإ","ﻷ":"لأ","ﻵ":"لآ"},
+     u:"ذ1234567890-="+"ضصثقفغعهخحجد\\"+"شسيبلاتنمكط"+"ئءؤرﻻىةوزظ",
+     s:"ّ!@#$%^&*()_+"+"ًٌَُﻹإ‘÷×؛<>|"+"ٍِ][ﻷأـ،/:\""+"~ْ}{ﻵآ’,.؟"},
+ ru:{n:"Русский",u:"ё1234567890-="+"йцукенгшщзхъ\\"+"фывапролджэ"+"ячсмитьбю.",
+     s:"Ё!\"№;%:?*()_+"+"ЙЦУКЕНГШЩЗХЪ/"+"ФЫВАПРОЛДЖЭ"+"ЯЧСМИТЬБЮ,"},
+ uk:{n:"Українська",u:"'1234567890-="+"йцукенгшщзхїґ"+"фівапролджє"+"ячсмитьбю.",
+     s:"₴!\"№;%:?*()_+"+"ЙЦУКЕНГШЩЗХЇҐ"+"ФІВАПРОЛДЖЄ"+"ЯЧСМИТЬБЮ,"},
+ el:{n:"Ελληνικά",u:"`1234567890-="+";ςερτυθιοπ[]\\"+"ασδφγηξκλ΄'"+"ζχψωβνμ,./",
+     s:"~!@#$%^&*()_+"+":ΣΕΡΤΥΘΙΟΠ{}|"+"ΑΣΔΦΓΗΞΚΛ¨\""+"ΖΧΨΩΒΝΜ<>?"},
+ he:{n:"עברית",u:";1234567890-="+"/'קראטוןםפ][\\"+"שדגכעיחלךף,"+"זסבהנמצתץ.",
+     s:"~!@#$%^&*()_+"+"/'קראטוןםפ}{|"+"שדגכעיחלך:\""+"זסבהנמצ<>?"},
+ tr:{n:"Türkçe",u:"\"1234567890*-"+"qwertyuıopğü,"+"asdfghjklşi"+"zxcvbnmöç.",
+     s:"é!'^+%&/()=?_"+"QWERTYUIOPĞÜ;"+"ASDFGHJKLŞİ"+"ZXCVBNMÖÇ:"},
+ de:{n:"Deutsch",u:"^1234567890ß´"+"qwertzuiopü+#"+"asdfghjklöä"+"yxcvbnm,.-",
+     s:"°!\"§$%&/()=?`"+"QWERTZUIOPÜ*'"+"ASDFGHJKLÖÄ"+"YXCVBNM;:_"},
+ fr:{n:"Français",u:"²&é\"'(-è_çà)="+"azertyuiop^$*"+"qsdfghjklmù"+"wxcvbn,;:!",
+     s:"²1234567890°+"+"AZERTYUIOP¨£µ"+"QSDFGHJKLM%"+"WXCVBN?./§"}
+};
+const LAY={};
+for(const id in RAW){const r=RAW[id];const U=[...r.u],S=[...r.s],m={};
+ U.forEach((c,i)=>{if(!(c in m))m[c]=[i,0]});S.forEach((c,i)=>{if(!(c in m))m[c]=[i,1]});
+ if(id==='el')m['Σ']=[S.lastIndexOf('Σ'),1];
+ LAY[id]={n:r.n,U,S,m,lig:r.lig||null}}
+function collapse(t,L){if(L.lig)for(const k in L.lig)t=t.split(L.lig[k]).join(k);return t}
+function expand(c,L){return L.lig&&L.lig[c]?L.lig[c]:c}
+function convert(text,from,to){const F=LAY[from],T=LAY[to];let o='';
+ for(const ch of collapse(text,F)){const h=F.m[ch];
+  if(h){const c=(h[1]?T.S:T.U)[h[0]];o+=c===undefined?ch:expand(c,T)}else o+=ch}
+ return o}
+function detect(text){const n={ar:0,he:0,el:0,cy:0,la:0};
+ for(const ch of text){if(/[\u0600-\u06FF]/.test(ch))n.ar++;else if(/[\u0590-\u05FF]/.test(ch))n.he++;
+  else if(/[\u0370-\u03FF]/.test(ch))n.el++;else if(/[\u0400-\u04FF]/.test(ch))n.cy++;else if(/[A-Za-z]/.test(ch))n.la++}
+ let best='la',b=0;for(const k of ['ar','he','el','cy','la'])if(n[k]>b){b=n[k];best=k}
+ if(!b)return null;
+ if(best==='cy')return /[іїєґІЇЄҐ]/.test(text)?'uk':'ru';
+ return best==='la'?'en':best}
+/*ENDENGINE*/
+const I18N={
+ ar:{name:"العربية",dir:"rtl",title:"مصحّح لغة الكيبورد",lead:"كتبت بلغة غلط عشان الكيبورد كان على لغة تانية؟ الصق النص وهيتحول للغة اللي كنت تقصدها.",from:"اللغة المراد تحويلها",to:"اللغة المراد التحويل لها",auto:"تلقائي",inp:"النص المكتوب",out:"النص المصحّح",ph:"اكتب أو الصق النص هنا...",copy:"نسخ",copied:"✓ اتنسخ",clear:"مسح",det:"تم التعرف",note:"التحويل حرف بحرف حسب موضع المفتاح على الكيبورد. اللغات اللاتينية (فرنسي، ألماني، تركي) لازم تختارها بنفسك."},
+ en:{name:"English",dir:"ltr",title:"Keyboard Layout Fixer",lead:"Typed with the wrong keyboard language? Paste the text and it is converted to what you meant to write.",from:"Text was typed as",to:"Convert to",auto:"Auto",inp:"Typed text",out:"Fixed text",ph:"Type or paste here...",copy:"Copy",copied:"✓ Copied",clear:"Clear",det:"Detected",note:"Conversion is key by key, based on physical key positions. Latin-script languages (French, German, Turkish) must be chosen manually."},
+ ru:{name:"Русский",dir:"ltr",title:"Исправление раскладки",lead:"Набрали текст не в той раскладке? Вставьте его, и он преобразуется в нужный язык.",from:"Текст набран как",to:"Преобразовать в",auto:"Авто",inp:"Введённый текст",out:"Исправленный текст",ph:"Введите или вставьте текст...",copy:"Копировать",copied:"✓ Скопировано",clear:"Очистить",det:"Определено",note:"Преобразование идёт по положению клавиш. Для латинских языков (французский, немецкий, турецкий) выбирайте раскладку вручную."},
+ fr:{name:"Français",dir:"ltr",title:"Correcteur de disposition clavier",lead:"Vous avez tapé avec la mauvaise langue de clavier ? Collez le texte, il sera converti.",from:"Texte tapé en",to:"Convertir en",auto:"Auto",inp:"Texte saisi",out:"Texte corrigé",ph:"Saisissez ou collez ici...",copy:"Copier",copied:"✓ Copié",clear:"Effacer",det:"Détecté",note:"Conversion touche par touche selon la position physique. Pour les langues latines (français, allemand, turc), choisissez manuellement."}
+};
+if(typeof document!=='undefined'){
+ const $=id=>document.getElementById(id);
+ const ids=Object.keys(LAY);
+ let ui=(navigator.language||'en').slice(0,2);if(!I18N[ui])ui='en';
+ const pref=ids.includes((navigator.language||'').slice(0,2))?(navigator.language).slice(0,2):'ar';
+ for(const k in I18N)$('uilang').add(new Option(I18N[k].name,k));
+ function fill(sel,keep){const v=keep;sel.innerHTML='';sel.add(new Option(I18N[ui].auto,'auto'));
+  ids.forEach(i=>sel.add(new Option(LAY[i].n,i)));sel.value=v||'auto'}
+ function resolve(){const txt=$('input').value;let f=$('from').value,t=$('to').value;
+  if(f==='auto')f=detect(txt)||'en';
+  if(t==='auto')t=f==='en'?(pref==='en'?'ar':pref):'en';
+  if(t===f)t=f==='en'?'ar':'en';
+  return[f,t]}
+ function render(){const[f,t]=resolve();$('output').value=convert($('input').value,f,t);
+  $('det-badge').textContent=I18N[ui].det+': '+LAY[f].n+' → '+LAY[t].n}
+ function setUI(k){ui=k;const d=I18N[k];document.documentElement.lang=k;document.documentElement.dir=d.dir;
+  $('uilang').value=k;document.title=d.title;$('t-title').textContent=d.title;$('t-lead').textContent=d.lead;
+  $('t-from').textContent=d.from;$('t-to').textContent=d.to;$('t-in').textContent=d.inp;$('t-out').textContent=d.out;
+  $('input').placeholder=d.ph;$('copy-btn').textContent=d.copy;$('copied-msg').textContent=d.copied;
+  $('clear-btn').textContent=d.clear;$('t-note').textContent=d.note;
+  fill($('from'),$('from').value);fill($('to'),$('to').value);render()}
+ $('uilang').onchange=e=>setUI(e.target.value);
+ $('from').onchange=$('to').onchange=$('input').oninput=render;
+ $('swap').onclick=()=>{const[f,t]=resolve();$('from').value=t;$('to').value=f;render()};
+ $('clear-btn').onclick=()=>{$('input').value='';render();$('input').focus()};
+ $('copy-btn').onclick=async()=>{const o=$('output');if(!o.value)return;
+  try{await navigator.clipboard.writeText(o.value)}catch(e){o.select();document.execCommand('copy')}
+  $('copied-msg').classList.add('show');setTimeout(()=>$('copied-msg').classList.remove('show'),1400)};
+ setUI(ui);
+}
+</script>
+</body>
+</html>
